@@ -1,0 +1,119 @@
+.tabBar {
+  display: flex;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  height: var(--tabbar-height);
+  overflow-x: auto;
+  overflow-y: hidden;
+  align-items: center;
+  padding-left: 0;
+  scroll-behavior: smooth;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.tabsList {
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  background: transparent;
+  height: calc(100% - 2px);
+  cursor: pointer;
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--text-secondary);
+  user-select: none;
+  transition: all var(--transition-fast);
+  position: relative;
+  border-right: 1px solid var(--border-color);
+  border-top: 2px solid transparent;
+  margin-bottom: -1px;
+  flex-shrink: 0;
+}
+
+.tab:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+  color: var(--text-primary);
+}
+
+.tab.active {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-top-color: var(--accent);
+  border-bottom: 1px solid var(--bg-primary);
+  font-weight: 600;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.icon {
+  margin-right: var(--space-2);
+  display: flex;
+  align-items: center;
+  color: var(--text-muted);
+}
+
+.tab.active .icon {
+  color: var(--accent);
+}
+
+.title {
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  margin-left: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border-radius: 4px;
+  opacity: 0.5;
+  transition: all var(--transition-fast);
+}
+
+.tab:hover .closeBtn {
+  opacity: 1;
+}
+
+.closeBtn:hover {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.addTabBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin-left: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.addTabBtn:hover {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}

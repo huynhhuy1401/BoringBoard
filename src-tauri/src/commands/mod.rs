@@ -1,0 +1,11 @@
+pub mod admin;
+pub mod connection;
+pub mod data;
+pub mod import;
+pub mod query;
+pub mod query_favorites;
+pub mod query_history;
+pub mod schema;
+pub mod settings;
+pub mod sql_scripts;
+pub mod tabs;

@@ -1,0 +1,61 @@
+.statusBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  height: var(--statusbar-height);
+  padding: 0 10px;
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.separator {
+  color: var(--text-muted);
+  font-size: var(--font-size-2xs);
+}
+
+.connected {
+  color: var(--success);
+  display: flex;
+  align-items: center;
+}
+
+.disconnected {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.successIcon {
+  color: var(--success);
+}
+
+.info {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.queryInfo {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xs);
+}
+
+.dbType {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--text-muted);
+  font-size: var(--font-size-2xs);
+}
