@@ -154,7 +154,8 @@
 .tree {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 8px;
+  overflow-x: hidden;
+  padding: 8px 0;
   font-size: var(--font-size-xs);
   background: transparent;
   display: flex;
@@ -168,13 +169,13 @@
 .nodeHeader {
   display: flex;
   align-items: center;
-  padding: 4px 6px;
+  padding: 4px 12px;
   cursor: pointer;
-  border-radius: var(--radius-md);
   color: var(--text-primary);
   gap: 6px;
   user-select: none;
-  transition: all var(--transition-fast);
+  position: relative;
+  z-index: 1;
 }
 
 .nodeHeader > span {
@@ -184,7 +185,20 @@
   font-weight: 500;
 }
 
-.nodeHeader:hover {
+.nodeHeader::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1000px;
+  right: -1000px;
+  background-color: transparent;
+  z-index: -1;
+  pointer-events: none;
+  transition: background-color var(--transition-fast);
+}
+
+.nodeHeader:hover::before {
   background-color: var(--bg-hover);
 }
 
@@ -361,11 +375,11 @@
 .leafNode {
   display: flex;
   align-items: center;
-  padding: 3px 6px;
+  padding: 4px 12px;
   color: var(--text-secondary);
   gap: 6px;
-  border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  position: relative;
+  z-index: 1;
 }
 
 .leafNode > span {
@@ -374,8 +388,24 @@
   text-overflow: ellipsis;
 }
 
-.leafNode:hover {
+.leafNode::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1000px;
+  right: -1000px;
+  background-color: transparent;
+  z-index: -1;
+  pointer-events: none;
+  transition: background-color var(--transition-fast);
+}
+
+.leafNode:hover::before {
   background-color: var(--bg-hover);
+}
+
+.leafNode:hover {
   color: var(--text-primary);
 }
 

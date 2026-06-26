@@ -674,6 +674,58 @@ export const DataGrid: React.FC<DataGridProps> = ({
     return schemaColumns[key] || [];
   }, [schema, tableName, schemaColumns]);
 
+  // Mapping of columns to their details (PK/FK)
+  const colDetailsMap = useMemo(() => {
+    const map = new Map<string, { isPk: boolean; isFk: boolean }>();
+    tableColDetails.forEach((c) => {
+      map.set(c.name, { isPk: c.is_primary_key, isFk: c.is_foreign_key });
+    });
+    return map;
+  }, [tableColDetails]);
+
+  // Checks if a column's SQL type is numeric
+  const isNumericColumn = useCallback((type: string) => {
+    if (!type) return false;
+    const t = type.toLowerCase();
+    return t.includes('int') || 
+           t.includes('num') || 
+           t.includes('decimal') || 
+           t.includes('numeric') || 
+           t.includes('double') || 
+           t.includes('float') || 
+           t.includes('real') || 
+           t.includes('serial');
+  }, []);
+
+  // Checks if a column value should be rendered in monospace
+  const isMonoColumn = useCallback((name: string, type: string, index: number) => {
+    if (!type) return false;
+    const t = type.toLowerCase();
+    const n = name.toLowerCase();
+    const details = colDetailsMap.get(name);
+    
+    return t.includes('int') || 
+           t.includes('num') || 
+           t.includes('double') || 
+           t.includes('float') || 
+           t.includes('real') || 
+           t.includes('decimal') || 
+           t.includes('numeric') || 
+           t.includes('serial') || 
+           t.includes('date') || 
+           t.includes('time') || 
+           t.includes('timestamp') || 
+           t.includes('uuid') || 
+           t.includes('oid') || 
+           n === 'id' || 
+           n.endsWith('_id') || 
+           n.startsWith('id_') || 
+           n === 'oid' || 
+           index === pkColumnIndex || 
+           !!details?.isPk || 
+           !!details?.isFk;
+  }, [colDetailsMap, pkColumnIndex]);
+
   return (
     <div className={styles.gridContainer}>
       {/* Toolbar */}
@@ -809,11 +861,18 @@ export const DataGrid: React.FC<DataGridProps> = ({
           {!isTableTab && <div className={styles.rowNumberHeader}>#</div>}
           {columns.map((col, index) => {
             if (hiddenColumns.has(index)) return null;
+            const details = colDetailsMap.get(col.name);
+            const isPk = !!details?.isPk || pkColumnIndex === index;
+            const isFk = !!details?.isFk;
+            const isNum = isNumericColumn(col.data_type);
+            
             return (
-            <div key={col.name} className={styles.headerCell} style={{ position: 'relative' }}>
+            <div key={col.name} className={`${styles.headerCell} ${isNum ? styles.numericHeader : ''}`} style={{ position: 'relative' }}>
               <div className={styles.headerContent} onClick={() => handleHeaderClick(col.name)} style={{ cursor: 'pointer' }}>
                 <span className={styles.columnName}>
                   {col.name}
+                  {isPk && <span className={`${styles.badge} ${styles.badgePk}`} title="Primary Key">PK</span>}
+                  {isFk && <span className={`${styles.badge} ${styles.badgeFk}`} title="Foreign Key">FK</span>}
                   {currentSortCol === col.name && currentSortDir === 'ASC' && <ArrowUp size={12} className={styles.sortArrow} />}
                   {currentSortCol === col.name && currentSortDir === 'DESC' && <ArrowDown size={12} className={styles.sortArrow} />}
                 </span>
@@ -883,12 +942,15 @@ export const DataGrid: React.FC<DataGridProps> = ({
                 {!isTableTab && <div className={styles.rowNumber}>{virtualRow.index + 1 + (isTableTab ? 0 : page * rowsPerPage)}</div>}
                 {row.map((cell, colIndex) => {
                   if (hiddenColumns.has(colIndex)) return null;
+                  const col = columns[colIndex];
+                  const isNum = isNumericColumn(col?.data_type);
+                  const isMono = isMonoColumn(col?.name, col?.data_type, colIndex);
                   const isEditing = editingCell?.rowIndex === virtualRow.index && editingCell?.colIndex === colIndex;
                   const hasCellEdit = pendingChanges.some((c) => c.type === 'update' && c.rowIndex === virtualRow.index && c.colIndex === colIndex);
                   return (
                     <div
                       key={colIndex}
-                      className={`${styles.cell} ${pkColumnIndex === colIndex ? styles.pkCell : ''} ${hasCellEdit ? styles.cellModified : ''} ${isTableTab ? styles.cellEditable : ''}`}
+                      className={`${styles.cell} ${pkColumnIndex === colIndex ? styles.pkCell : ''} ${hasCellEdit ? styles.cellModified : ''} ${isTableTab ? styles.cellEditable : ''} ${isNum ? styles.numericCell : ''} ${isMono ? styles.monoCell : ''}`}
                       onDoubleClick={() => isTableTab && handleCellDoubleClick(virtualRow.index, colIndex, cell)}
                       onContextMenu={(e) => handleContextMenu(e, virtualRow.index, colIndex, cell)}
                     >

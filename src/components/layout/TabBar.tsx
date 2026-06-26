@@ -2,7 +2,7 @@ import React from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { useTabStore } from '../../stores/tabStore';
 import { useConnectionStore } from '../../stores/connectionStore';
-import { FileText, Database, X, Plus } from 'lucide-react';
+import { FileText, Database, X, Plus, Table, Settings, Code2, Activity } from 'lucide-react';
 import styles from '../../styles/components/TabBar.module.css';
 
 export const TabBar: React.FC = () => {
@@ -41,6 +41,26 @@ export const TabBar: React.FC = () => {
     });
   };
 
+  const getTabIcon = (type: string, isActive: boolean) => {
+    const color = isActive ? undefined : 'var(--text-muted)';
+    switch (type) {
+      case 'editor':
+        return <FileText size={13} style={isActive ? { color: 'var(--accent)' } : { color }} />;
+      case 'table':
+        return <Table size={13} style={isActive ? { color: 'var(--accent)' } : { color }} />;
+      case 'table-properties':
+        return <Settings size={13} style={isActive ? { color: 'var(--warning)' } : { color }} />;
+      case 'function-properties':
+        return <Code2 size={13} style={isActive ? { color: 'var(--info)' } : { color }} />;
+      case 'sequence-properties':
+        return <Activity size={13} style={isActive ? { color: 'var(--warning)' } : { color }} />;
+      case 'server-info':
+        return <Database size={13} style={isActive ? { color: 'var(--success)' } : { color }} />;
+      default:
+        return <Database size={13} style={{ color }} />;
+    }
+  };
+
   return (
     <div className={styles.tabBar}>
       <div className={styles.tabsList}>
@@ -53,7 +73,7 @@ export const TabBar: React.FC = () => {
               onClick={() => handleTabClick(tab.id)}
             >
               <span className={styles.icon}>
-                {tab.type === 'editor' ? <FileText size={13} /> : tab.type === 'server-info' ? <Database size={13} /> : <Database size={13} />}
+                {getTabIcon(tab.type, isActive)}
               </span>
               <span className={styles.title}>{tab.title}</span>
               <button

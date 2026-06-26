@@ -172,7 +172,7 @@
 }
 
 .headerCell {
-  padding: 4px 12px;
+  padding: 4px 8px;
   text-align: left;
   border-right: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
@@ -181,6 +181,19 @@
   height: 100%;
   overflow: hidden;
   background-color: var(--bg-secondary);
+}
+
+.numericHeader {
+  justify-content: flex-end;
+}
+
+.numericHeader .headerContent {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.numericHeader .columnName {
+  justify-content: flex-end;
 }
 
 .headerContent {
@@ -323,7 +336,7 @@
 }
 
 .cell {
-  padding: 6px 12px;
+  padding: 4px 8px;
   border-right: 1px solid var(--border-color);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -332,7 +345,45 @@
   align-items: center;
   font-size: var(--font-size-xs); /* Clean 12px text */
   color: var(--text-primary);
-  font-family: var(--font-mono); /* Professional monospace data alignment */
+  font-family: var(--font-sans); /* Default to clean sans font */
+}
+
+.monoCell {
+  font-family: var(--font-mono); /* Monospace only for specific database values */
+}
+
+.numericCell {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 1px 3px;
+  border-radius: 3px;
+  line-height: 1;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  user-select: none;
+  margin-left: 4px;
+}
+
+.badgePk {
+  background-color: var(--warning);
+  color: #000000;
+}
+
+.badgeFk {
+  background-color: var(--info);
+  color: #ffffff;
+}
+
+body.dark .badgeFk {
+  color: #000000;
 }
 
 .pkCell {

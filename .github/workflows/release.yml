@@ -70,7 +70,18 @@ jobs:
             - **Windows**: Download the `-setup.exe` installer
             - **Linux**: Download the `.AppImage` or `.deb` file
 
-            > macOS users: right-click the app and select "Open" on first launch to bypass Gatekeeper.
+            ### macOS First Launch
+
+            Since this app is not signed with an Apple Developer certificate, macOS will block it. To open it:
+
+            1. Drag BoringBoard from the DMG to Applications
+            2. Open Terminal and run:
+               ```
+               xattr -cr /Applications/BoringBoard.app
+               ```
+            3. Open BoringBoard normally
+
+            Alternatively, right-click → Open twice to bypass Gatekeeper.
           releaseDraft: true
           prerelease: false
           args: --target ${{ matrix.target }}
