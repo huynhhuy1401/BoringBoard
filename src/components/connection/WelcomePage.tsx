@@ -164,7 +164,7 @@ export const WelcomePage: React.FC = () => {
                 </div>
               </div>
             </div>
-            <h1 className={styles.brandTitle}>PgLens</h1>
+            <h1 className={styles.brandTitle}>BoringBoard</h1>
             <p className={styles.brandVersion}>PostgreSQL client</p>
           </div>
 

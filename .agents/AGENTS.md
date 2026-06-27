@@ -1,6 +1,6 @@
-# Design System & UI Development Rules for pgLens
+# Design System & UI Development Rules for BoringBoard
 
-Future AI agents working on **pgLens** must strictly adhere to the rules, styling guidelines, and design tokens documented below. pgLens is a premium developer tool built with Tauri, React, and Rust, demanding clean layouts, rich aesthetics, and consistent micro-interactions.
+Future AI agents working on **BoringBoard** must strictly adhere to the rules, styling guidelines, and design tokens documented below. BoringBoard is a premium developer tool built with Tauri, React, and Rust, demanding clean layouts, rich aesthetics, and consistent micro-interactions.
 
 ---
 
